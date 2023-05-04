@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 03, 2023 at 01:31 AM
+-- Generation Time: May 04, 2023 at 03:27 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -31,23 +31,23 @@ CREATE TABLE `courses` (
   `courses_id` int(6) NOT NULL,
   `name` varchar(255) NOT NULL,
   `category` varchar(25) NOT NULL,
-  `cost` varchar(6) NOT NULL,
-  `teacher` int(6) NOT NULL,
-  `published_on` date NOT NULL,
-  `language` varchar(10) NOT NULL,
-  `students-enrolled` int(3) NOT NULL,
-  `ratings` int(1) NOT NULL,
-  `reviews` varchar(1000) NOT NULL
+  `cost` float NOT NULL,
+  `teacher_id` int(6) NOT NULL,
+  `published_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `language` varchar(255) NOT NULL,
+  `students_enrolled` int(3) NOT NULL,
+  `course_code` varchar(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `courses`
 --
 
-INSERT INTO `courses` (`courses_id`, `name`, `category`, `cost`, `teacher`, `published_on`, `language`, `students-enrolled`, `ratings`, `reviews`) VALUES
-(101, 'Full Stack Web Development', 'Web Development', '£59.99', 100001, '2023-04-18', 'English', 10, 4, ''),
-(102, 'Introduction to Data Science', 'Data Science', '£39.99', 100001, '2023-04-20', 'English', 12, 5, ''),
-(103, 'Cybersecurity Fundamentals', 'Cybersecurity', '£39.99', 100001, '2023-04-10', 'English', 10, 4, '');
+INSERT INTO `courses` (`courses_id`, `name`, `category`, `cost`, `teacher_id`, `published_on`, `language`, `students_enrolled`, `course_code`) VALUES
+(0, 'Database Security', 'Databases', 45.99, 100001, '2023-05-04 01:25:38', 'English, Spanish', 0, 'G404'),
+(101, 'Full Stack Web Development', 'Web Development', 59.99, 100001, '2023-04-17 23:00:00', 'English', 0, ''),
+(102, 'Introduction to Data Science', 'Data Science', 59.99, 100001, '2023-04-19 23:00:00', 'English', 0, ''),
+(103, 'Cybersecurity Fundamentals', 'Cybersecurity', 59.99, 100001, '2023-04-09 23:00:00', 'English', 0, '');
 
 -- --------------------------------------------------------
 
@@ -76,14 +76,14 @@ CREATE TABLE `lessons` (
   `pdf` varchar(100) NOT NULL,
   `ppt` varchar(100) NOT NULL,
   `videos` varchar(100) NOT NULL,
-  `courses_id` int(6) NOT NULL
+  `course_id` int(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `lessons`
 --
 
-INSERT INTO `lessons` (`lesson_id`, `title`, `description`, `pdf`, `ppt`, `videos`, `courses_id`) VALUES
+INSERT INTO `lessons` (`lesson_id`, `title`, `description`, `pdf`, `ppt`, `videos`, `course_id`) VALUES
 (10101, 'Full Stack Web Development for Beginners', 'This course is designed for beginners who want to learn how to build a complete web application from scratch. You will learn the fundamentals of web development, including HTML, CSS, and JavaScript, as well as how to use popular web development frameworks like React, Node.js, and MongoDB to build full stack applications. By the end of the course, you will have built a fully functional web application that you can add to your portfolio.', '', '', 'https://www.youtube.com/watch?v=nu_pCVPKzTk', 101),
 (10102, 'Course overview', 'This course is designed for beginners who want to learn how to build a complete web application from scratch. You will learn the fundamentals of web development, including HTML, CSS, and JavaScript, as well as how to use popular web development frameworks like React, Node.js, and MongoDB to build full stack applications. By the end of the course, you will have built a fully functional web application that you can add to your portfolio.', 'full_stack.pdf', '', '', 101),
 (10103, 'full stack course presentation', 'This course is designed for beginners who want to learn how to build a complete web application from scratch. You will learn the fundamentals of web development, including HTML, CSS, and JavaScript, as well as how to use popular web development frameworks like React, Node.js, and MongoDB to build full stack applications. By the end of the course, you will have built a fully functional web application that you can add to your portfolio.', '', 'full_stack_presentation.ppt', '', 101),
@@ -116,7 +116,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `name`, `surname`, `dob`, `phone`, `type`, `password`) VALUES
-(100001, 'cdaaniel@outlook.com', 'Daniel', 'Cobzariu', '2023-05-10', '07402883319', 'S', '$2y$10$RqedvOe1danXQo/5cJs9auhWaWsCwjyvTkc8JXjE1XSDavuPo4pYG');
+(100001, 'cdaaniel@outlook.com', 'Daniel', 'Cobzariu', '2023-05-10', '07402883319', 'A', '$2y$10$RqedvOe1danXQo/5cJs9auhWaWsCwjyvTkc8JXjE1XSDavuPo4pYG');
 
 --
 -- Indexes for dumped tables
@@ -127,7 +127,7 @@ INSERT INTO `users` (`id`, `email`, `name`, `surname`, `dob`, `phone`, `type`, `
 --
 ALTER TABLE `courses`
   ADD PRIMARY KEY (`courses_id`),
-  ADD KEY `teacher` (`teacher`);
+  ADD KEY `teacher` (`teacher_id`);
 
 --
 -- Indexes for table `enrolment`
@@ -142,7 +142,7 @@ ALTER TABLE `enrolment`
 --
 ALTER TABLE `lessons`
   ADD PRIMARY KEY (`lesson_id`),
-  ADD KEY `courses_id` (`courses_id`);
+  ADD KEY `courses_id` (`course_id`);
 
 --
 -- Indexes for table `users`
@@ -153,12 +153,6 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT for dumped tables
 --
-
---
--- AUTO_INCREMENT for table `courses`
---
-ALTER TABLE `courses`
-  MODIFY `courses_id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- AUTO_INCREMENT for table `lessons`
@@ -180,7 +174,7 @@ ALTER TABLE `users`
 -- Constraints for table `courses`
 --
 ALTER TABLE `courses`
-  ADD CONSTRAINT `teacher` FOREIGN KEY (`teacher`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `teacher` FOREIGN KEY (`teacher_id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `enrolment`
@@ -194,7 +188,7 @@ ALTER TABLE `enrolment`
 -- Constraints for table `lessons`
 --
 ALTER TABLE `lessons`
-  ADD CONSTRAINT `courses_id` FOREIGN KEY (`courses_id`) REFERENCES `courses` (`courses_id`);
+  ADD CONSTRAINT `courses_id` FOREIGN KEY (`course_id`) REFERENCES `courses` (`courses_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

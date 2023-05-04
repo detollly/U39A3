@@ -20,8 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         $type = "S";
 
         if (!empty($email) && !empty($name) && !empty($surname) && !empty($dob) && !empty($phone) && !empty($password) && !empty($confirm_password)) {
-            if (strlen($password) < 5) {
-                $message = "<p style='color: red;'>The password must be at least 5 characters long.</p>";
+            if (strlen($password) < 8) {
+                $message = "<p style='color: red;'>The password must be at least 8 characters long.</p>";
             }
             if ($password !== $confirm_password) {
                 $message = "<p style='color: red;'>Passwords must match.</p>";
@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 ?>
 
 <body>
-    <section class="full-height">
+    <section>
         <div class="container login">
             <h1>Register</h1>
             <?php echo $message ?? null; ?>
