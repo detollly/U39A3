@@ -1,9 +1,7 @@
 <?php
 include "./inc/header.php";
 include "./inc/check-admin.php";
-
 ?>
-
 <div>
     <?php
     include "./inc/get-user-data.php";
@@ -55,12 +53,11 @@ include "./inc/check-admin.php";
                     <input type="text" name="course-code" required>
                 </div>
                 <div style="display: flex; align-items: center;">
-                    <input type="checkbox">
+                    <input type="checkbox" required>
                     <p>I confirm that I double checked the details.</p>
                 </div>
                 <button name="submit">Upload course</button>
             </form>
-            <p>Already have an account? Login <a href="login.php">here.</a></p>
         </div>
     </section>
 </div>

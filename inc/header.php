@@ -7,17 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to iTeachYou</title>
     <link rel="stylesheet" type="text/css" href="/assets/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css">
 </head>
 
 <body>
     <!-- Navigation -->
     <header>
-        <nav>
+        <nav style="display: flex; justify-content: space-between;">
             <?php
             session_start();
             if (isset($_SESSION["user_id"])) {
                 echo '<a href="logout.php" class="default-button">Logout</a>';
+                include "./inc/get-user-data.php";
+                if ($user["type"] === "A"  || $user["type"] === "T") {
+                    echo "<a role='button' href=./upload-course.php>Upload</a>";
+                }
             } else {
                 echo '<a href="login.php" class="default-button">Login</a>';
             }

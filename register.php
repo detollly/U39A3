@@ -7,48 +7,56 @@ if (isset($_SESSION["user_id"])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
+    //Connect to database and start transaction
     include "./inc/connect.php";
+    $mysqli->begin_transaction();
+    try {
+        if (isset($_POST['submit'])) {
+            $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+            $name = filter_var($_POST['name'], FILTER_SANITIZE_SPECIAL_CHARS);
+            $surname = filter_var($_POST['surname'], FILTER_SANITIZE_SPECIAL_CHARS);
+            $dob = filter_var($_POST['dob'], FILTER_SANITIZE_SPECIAL_CHARS);
+            $phone = filter_var($_POST['phone'], FILTER_SANITIZE_SPECIAL_CHARS);
+            $password = filter_var($_POST['password'], FILTER_SANITIZE_SPECIAL_CHARS);
+            $confirm_password = filter_var($_POST['confirm_password'], FILTER_SANITIZE_SPECIAL_CHARS);
+            $type = "S";
 
-    if (isset($_POST['submit'])) {
-        $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-        $name = filter_var($_POST['name'], FILTER_SANITIZE_SPECIAL_CHARS);
-        $surname = filter_var($_POST['surname'], FILTER_SANITIZE_SPECIAL_CHARS);
-        $dob = filter_var($_POST['dob'], FILTER_SANITIZE_SPECIAL_CHARS);
-        $phone = filter_var($_POST['phone'], FILTER_SANITIZE_SPECIAL_CHARS);
-        $password = filter_var($_POST['password'], FILTER_SANITIZE_SPECIAL_CHARS);
-        $confirm_password = filter_var($_POST['confirm_password'], FILTER_SANITIZE_SPECIAL_CHARS);
-        $type = "S";
-
-        if (!empty($email) && !empty($name) && !empty($surname) && !empty($dob) && !empty($phone) && !empty($password) && !empty($confirm_password)) {
-            if (strlen($password) < 8) {
-                $message = "<p style='color: red;'>The password must be at least 8 characters long.</p>";
-            }
-            if ($password !== $confirm_password) {
-                $message = "<p style='color: red;'>Passwords must match.</p>";
-            } else {
-                $sql = "SELECT * FROM users WHERE email =?";
-                $stmt = $mysqli->prepare($sql);
-                $stmt->bind_param('s', $email);
-                $stmt->execute();
-                $result = $stmt->get_result();
-
-                if (mysqli_num_rows($result)) {
-                    $message = "<p style='color: red;'>Email already taken.</p>";
-                } else {
-                    $password = password_hash($password, PASSWORD_DEFAULT);
-
-                    $sql = "INSERT INTO users (email, name, surname, dob, phone, type, password) VALUES (?, ?, ?, ?, ?, ?,?)";
-                    $stmt = $mysqli->prepare($sql);
-                    $result = $stmt->bind_param('sssssss', $email, $name, $surname, $dob, $phone, $type, $password);
-                    $stmt->execute();
-                    $stmt->close();
-                    $message = "<p style='color: green;'>Account created successfully.</p>";
+            if (!empty($email) && !empty($name) && !empty($surname) && !empty($dob) && !empty($phone) && !empty($password) && !empty($confirm_password)) {
+                if (strlen($password) < 8) {
+                    $message = "<p style='color: red;'>The password must be at least 8 characters long.</p>";
                 }
+                if ($password !== $confirm_password) {
+                    $message = "<p style='color: red;'>Passwords must match.</p>";
+                } else {
+                    $sql = "SELECT * FROM users WHERE email =?";
+                    $stmt = $mysqli->prepare($sql);
+                    $stmt->bind_param('s', $email);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+
+                    if (mysqli_num_rows($result)) {
+                        $message = "<p style='color: red;'>Email already taken.</p>";
+                    } else {
+                        $password = password_hash($password, PASSWORD_DEFAULT);
+
+                        $sql = "INSERT INTO users (email, name, surname, dob, phone, type, password) VALUES (?, ?, ?, ?, ?, ?,?)";
+                        $stmt = $mysqli->prepare($sql);
+                        $result = $stmt->bind_param('sssssss', $email, $name, $surname, $dob, $phone, $type, $password);
+                        $stmt->execute();
+                        $stmt->close();
+                        $message = "<p style='color: green;'>Account created successfully.</p>";
+                    }
+                }
+            } else {
+                $message = "<p style='color: red;'>All inputs must be completed.</p>";
             }
-        } else {
-            $message = "<p style='color: red;'>All inputs must be completed.</p>";
-        }
-    };
+        };
+        //Commit the transaction
+        $mysqli->commit();
+    } catch (Exception $err) {
+        $mysqli->rollback();
+        echo 'Error ' . $err->getMessage();
+    }
 }
 ?>
 
