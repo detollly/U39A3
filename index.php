@@ -29,7 +29,7 @@ if (isset($_SESSION["user_id"])) {
         $lesson_video_url = $lesson["video"];
         $lesson_description = $lesson["description"];
 
-        $api_key = "AIzaSyCEaPi-Hwd2xo3cFv9KARHGsgVKhkoSEtQ";
+        $api_key = "enter here";
         parse_str(parse_url($lesson_video_url, PHP_URL_QUERY), $params);
         $video_id = $params['v'];
         $url = "https://www.googleapis.com/youtube/v3/videos?id={$video_id}&key={$api_key}&part=snippet";
