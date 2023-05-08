@@ -29,7 +29,7 @@ if (isset($_SESSION["user_id"])) {
         $lesson_video_url = $lesson["video"];
         $lesson_description = $lesson["description"];
 
-        $api_key = "AIzaSyCEaPi-Hwd2xo3cFv9KARHGsgVKhkoSEtQ";
+        $api_key = "AIzaSyBpOEkB8OS530tXL7kEndX8txepdCTdAx0";
         parse_str(parse_url($lesson_video_url, PHP_URL_QUERY), $params);
         $video_id = $params['v'];
         $url = "https://www.googleapis.com/youtube/v3/videos?id={$video_id}&key={$api_key}&part=snippet";
@@ -44,7 +44,7 @@ if (isset($_SESSION["user_id"])) {
                 <div class='card-body'>
                     <h5 class='card-title text-dark'>$course_title</h5>
                     <p class='card-text'>" . substr($lesson_description, 0, strpos($lesson_description, '.') + 1) . "</p>
-                    <a href='#' class='btn btn-primary'>View Course</a>
+                    <a href='view-course.php?course_id=$course_id' class='btn btn-primary'>View Course</a>
                 </div>
             </div>
             ";

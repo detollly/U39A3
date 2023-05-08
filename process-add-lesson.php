@@ -19,8 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         $resultSet = $stmt->get_result();
         $result = $resultSet->fetch_assoc();
         $course_id;
-        if (!empty($result["course_id"])) {
-            $course_id = $result["course_id"];
+        if (!empty($result["id"])) {
+            $course_id = $result["id"];
         } else {
             exit("Error: The course could not be found!");
         };
