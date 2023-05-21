@@ -1,6 +1,5 @@
 <?php
 include "./inc/header.php";
-include "./inc/check-admin.php";
 ?>
 <div>
     <?php
@@ -23,7 +22,7 @@ include "./inc/check-admin.php";
                         <option value="Web Development">Web Development</option>
                         <option value="Cyber Security">Cyber Security</option>
                         <option value="Data Structures">JavaScript</option>
-                        <option value="Algorithms">React</option>
+                        <option value="React">React</option>
                     </select>
                 </div>
                 <div>

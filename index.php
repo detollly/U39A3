@@ -1,7 +1,6 @@
 <?php
 include "./inc/header.php";
 require "./inc/connect.php";
-require "./inc/check-admin.php";
 
 //Check user type
 if (isset($_SESSION["user_id"])) {
@@ -12,7 +11,7 @@ if (isset($_SESSION["user_id"])) {
 };
 ?>
 
-<div class="d-flex gap-2 my-5">
+<div class="d-flex flex-wrap justify-content-center gap-2 my-5">
     <?php
     //Get the courses
     $sql = "SELECT * FROM courses";
@@ -29,7 +28,7 @@ if (isset($_SESSION["user_id"])) {
         $lesson_video_url = $lesson["video"];
         $lesson_description = $lesson["description"];
 
-        $api_key = "enter here";
+        $api_key = "AIzaSyBpOEkB8OS530tXL7kEndX8txepdCTdAx0";
         parse_str(parse_url($lesson_video_url, PHP_URL_QUERY), $params);
         $video_id = $params['v'];
         $url = "https://www.googleapis.com/youtube/v3/videos?id={$video_id}&key={$api_key}&part=snippet";

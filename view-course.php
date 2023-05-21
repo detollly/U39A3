@@ -1,37 +1,78 @@
 <?php
 require "./inc/header.php";
-$course_id = $_GET["course_id"];
+$course_id = null;
+
+if (isset($_GET["course_id"])) {
+    $course_id = $_GET["course_id"];
+} else {
+    exit("Invalid course ID");
+}
+
 
 require "./inc/connect.php";
 $sql = "SELECT * FROM courses WHERE id = $course_id";
 $result = $mysqli->query($sql);
 $course = $result->fetch_assoc();
 
+if (!$course) {
+    exit("Invalid course");
+}
+
 //Get lesson data
 $sql = "SELECT * FROM lessons WHERE course_id = $course_id";
 $lessons = $mysqli->query($sql);
+$is_enrolled = true;
+
+
 ?>
-<div class="row">
+
+<div class="row d-flex flex-row-reverse">
     <div class="col">
         <div class="accordion" id="lessonAccordion">
             <!-- Loop over each lesson and create an accordion item for it -->
-            <?php while ($lesson = $lessons->fetch_assoc()) { ?>
+            <?php
+            $index = 1;
+            while ($lesson = $lessons->fetch_assoc()) {
+            ?>
                 <div class="accordion-item">
+                    <!-- prettier-ignore -->
                     <h2 class="accordion-header" id="heading<?php echo $lesson['id']; ?>">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $lesson['id']; ?>" aria-expanded="false" aria-controls="collapse<?php echo $lesson['id']; ?>">
                             <?php echo $lesson['title']; ?>
                         </button>
                     </h2>
-                    <!-- Add PDF File -->
-                    <!-- <a href="#" class="h6 text-dark" download="<?php echo "courses/{$course['name']}/{$lesson['ppt']}"; ?> "><?php echo $lesson["ppt"] ?> </a><br> -->
-                    <!-- Add PPT File -->
-                    <a href="#" class="h6 text-dark" download="<?php echo $lesson['pdf']; ?>" onclick="this.href='<?php echo './courses/' . $course['name'] . '/' . $lesson['pdf']; ?>'">
-                        <?php echo $lesson['pdf']; ?>
-                    </a>
+
+                    <?php
+                    //Add PDF File
+                    if ($lesson["pdf"]) {
+                        if ($is_enrolled) {
+                            print $index;
+                            $path =  "./courses/" . $course['name'] . "/Lesson " . $index . "/" . $lesson['pdf'];
+                            echo "<a href='$path' class='h6 text-dark' download> PDF File</a>";
+                        } else {
+                            echo "<p class='text-secondary'>PDF File <i class='fa-solid fa-lock mx-2'></i></p>";
+                        }
+                    }
+                    //Add PDF File
+
+                    if ($lesson["ppt"]) {
+                        if ($is_enrolled) {
+                            print $index;
+                            $path =  "./courses/" . $course['name'] . "/Lesson " . $index . "/" . $lesson['ppt'];
+                            echo "<a href='$path' class='h6 text-dark' download> PowerPoint File</a>";
+                        } else {
+
+                            echo "<p class='text-secondary'>PowerPoint File<i class='fa-solid fa-lock mx-2'></i></p>";
+                        }
+                    }
+
+                    $index++;
+                    ?>
+
                     <div id="collapse<?php echo $lesson['id']; ?>" class="accordion-collapse collapse" aria-labelledby="heading<?php echo $lesson['id']; ?>" data-bs-parent="#lessonAccordion">
                         <div class="accordion-body">
+                            <button class="btn btn-primary" <?php echo $is_enrolled ? 'onclick="changeVideo(\'' . $lesson['video'] . '\')"' : "disabled" ?>>Watch Lesson</button>
 
-                            <button class="btn btn-primary" onclick="changeVideo('<?php echo $lesson['video']; ?>')">Watch Lesson</button>
                         </div>
                     </div>
                 </div>
@@ -48,8 +89,24 @@ $lessons = $mysqli->query($sql);
         $video_id = $params['v'];
         ?>
         <iframe id="videoPlayer" width="560" height="315" src="https://www.youtube.com/embed/<?php echo $video_id; ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <p><?php echo $lesson["description"]; ?></p>
+    </div>
+
+    <div>
+        <?php
+        if (isset($_SESSION["user_id"]) && $is_enrolled === false) {
+            echo '<a href="#" class="btn btn-dark">Enroll</a>';
+        } elseif (isset($_SESSION["user_id"]) && $is_enrolled === true) {
+            echo "You joined this course on {date}.";
+        } else {
+            echo "Log in to enrol!";
+        }
+        ?>
     </div>
 </div>
+</div>
+
+
 
 <!-- Add the JavaScript function to change the video -->
 <script>
