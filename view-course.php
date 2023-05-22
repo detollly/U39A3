@@ -1,6 +1,5 @@
 <?php
 require "./inc/header.php";
-require "./inc/get-user-data.php";
 
 //Validate course ID
 $course_id = null;
@@ -10,11 +9,12 @@ if (isset($_GET["course_id"])) {
     exit("Invalid course ID");
 }
 
-
+//Establish connection with the database
 require "./inc/connect.php";
-$sql = "SELECT * FROM courses WHERE id = $course_id";
-$result = $mysqli->query($sql);
-$course = $result->fetch_assoc();
+require "./inc/get-course-date.php";
+
+//Get course data
+$course = getCourseData($course_id);
 
 if (!$course) {
     exit("Invalid course");
@@ -23,9 +23,30 @@ if (!$course) {
 //Get lesson data
 $sql = "SELECT * FROM lessons WHERE course_id = $course_id";
 $lessons = $mysqli->query($sql);
+
 $is_enrolled = false;
+$joining_date;
+
+if (isset($_SESSION["user_id"])) {
+    require "./inc/get-user-data.php";
+    //Get enrolment data
+    $user_id = $user["id"];
+    $course_price = $course["cost"];
+    $course_teacher = $course["teacher_id"];
+
+    $sql = "SELECT * FROM enrolment WHERE user_id=$user_id";
+    $enrolment = $mysqli->query($sql);
 
 
+    //Loop over each enrolment to check user data
+    while ($record = $enrolment->fetch_assoc()) {
+        if ($user_id === $record["user_id"] && $course_id === $record["course_id"]) {
+            $is_enrolled = true;
+            $date_time = $record["joining_date"];
+            $joining_date = date('d M Y', strtotime($date_time));
+        }
+    }
+}
 ?>
 
 <div class="row d-flex flex-row-reverse">
@@ -107,9 +128,6 @@ $is_enrolled = false;
 
     <div>
         <?php
-        $user_id = $user["id"];
-        $course_price = $course["cost"];
-        $course_teacher = $course["teacher_id"];
 
         // if ($course_teacher === $user_id) {
         //     echo "You are the creator of this course";
@@ -118,14 +136,15 @@ $is_enrolled = false;
         if (isset($_SESSION["user_id"]) && $is_enrolled === false) {
             echo "<a href='process-enrol.php?user_id=$user_id&course_id=$course_id&course_price=$course_price&teacher=$course_teacher' class='btn btn-dark'>Enroll</a>";
         } elseif (isset($_SESSION["user_id"]) && $is_enrolled === true) {
-            echo "You joined this course on {date}.";
+            echo "You joined this course on $joining_date.";
         } else {
-            echo "Log in to enrol!";
+            echo '<p><a href="login.php">Log in</a> to enrol!</p>';
         }
         ?>
     </div>
 </div>
 </div>
+
 
 
 
