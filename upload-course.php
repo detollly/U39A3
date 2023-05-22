@@ -2,10 +2,7 @@
 include "./inc/header.php";
 ?>
 <div>
-    <?php
-    include "./inc/get-user-data.php";
-    echo "Hello {$user["name"]}";
-    ?>
+    <?php include "./inc/get-user-data.php"; ?>
     <section>
         <div class="container login">
             <h1>Upload course</h1>
@@ -20,9 +17,9 @@ include "./inc/header.php";
                     <select name="category" required>
                         <option value="Databases">Databases</option>
                         <option value="Web Development">Web Development</option>
-                        <option value="Cyber Security">Cyber Security</option>
-                        <option value="Data Structures">JavaScript</option>
-                        <option value="React">React</option>
+                        <option value="Cybersecurity">Cybersecurity</option>
+                        <option value="Data Science">Data Science</option>
+                        <option value="Programming">Programming</option>
                     </select>
                 </div>
                 <div>

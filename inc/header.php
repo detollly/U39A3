@@ -22,7 +22,16 @@
             session_start();
             session_regenerate_id();
             if (isset($_SESSION["user_id"])) {
-                echo '<a href="logout.php" class="btn btn-secondary">Logout</a>';
+                echo '
+                <div class="d-flex w-100 justify-content-between">
+                    <a href="logout.php" class="btn btn-secondary">Logout</a>
+                    <div>
+                        <a href="index" class="mx-5">Home</a>
+                        <a href="account" class="btn btn-secondary mx-2"><i class="fa-solid fa-user"></i></a>
+                    </div>
+                    
+                </div>';
+
                 include "./inc/get-user-data.php";
                 if ($user["type"] === "A"  || $user["type"] === "T") {
                     echo "<a role='button' class='btn btn-primary' href=./upload-course.php>Upload</a>";
