@@ -1,7 +1,9 @@
 <?php
 require "./inc/header.php";
-$course_id = null;
+require "./inc/get-user-data.php";
 
+//Validate course ID
+$course_id = null;
 if (isset($_GET["course_id"])) {
     $course_id = $_GET["course_id"];
 } else {
@@ -21,12 +23,23 @@ if (!$course) {
 //Get lesson data
 $sql = "SELECT * FROM lessons WHERE course_id = $course_id";
 $lessons = $mysqli->query($sql);
-$is_enrolled = true;
+$is_enrolled = false;
 
 
 ?>
 
 <div class="row d-flex flex-row-reverse">
+    <div class="d-flex justify-content-between align-items-end">
+        <div class="d-flex flex-column">
+            <h2><?php echo $course["name"]; ?></h2>
+            <div class="d-flex justify-content-between ">
+                <p><?php echo $course["category"]; ?></p>
+                <p>Students enrolled: <?php echo $course["students_enrolled"]; ?> </p>
+            </div>
+        </div>
+
+        <p class="btn btn-danger">£<?php echo $course["cost"]; ?></p>
+    </div>
     <div class="col">
         <div class="accordion" id="lessonAccordion">
             <!-- Loop over each lesson and create an accordion item for it -->
@@ -94,8 +107,16 @@ $is_enrolled = true;
 
     <div>
         <?php
+        $user_id = $user["id"];
+        $course_price = $course["cost"];
+        $course_teacher = $course["teacher_id"];
+
+        // if ($course_teacher === $user_id) {
+        //     echo "You are the creator of this course";
+        // } else
+
         if (isset($_SESSION["user_id"]) && $is_enrolled === false) {
-            echo '<a href="#" class="btn btn-dark">Enroll</a>';
+            echo "<a href='process-enrol.php?user_id=$user_id&course_id=$course_id&course_price=$course_price&teacher=$course_teacher' class='btn btn-dark'>Enroll</a>";
         } elseif (isset($_SESSION["user_id"]) && $is_enrolled === true) {
             echo "You joined this course on {date}.";
         } else {

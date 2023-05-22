@@ -7,9 +7,10 @@
     $number_of_lessons = filter_var($_GET["lesson-number"], FILTER_SANITIZE_SPECIAL_CHARS);
     $file_error = false;
 
+
     for ($lesson = 1; $lesson < intval($number_of_lessons) + 1; $lesson++) {
         echo "
-        <div class='" . ($file_error === false ? 'success' : 'fail') . "';>
+        <div>
         <h2>Lesson $lesson</h2>
             <div>
                 <label for='lesson-$lesson-title'>Lesson $lesson title: </label>
@@ -21,11 +22,11 @@
             </div>
             <div>
                 <label for='lesson-$lesson-ppt'>Lesson $lesson PowerPoint</label>
-                <input type='file' name='lesson-$lesson-ppt' required>
+                <input type='file' name='lesson-$lesson-ppt'>
             </div>
             <div>
                 <label for='lesson-$lesson-pdf'>Lesson $lesson PDF</label>
-                <input type='file' name='lesson-$lesson-pdf' required>
+                <input type='file' name='lesson-$lesson-pdf'>
             </div>
             <div>
                 <label for='lesson-$lesson-video-url'>Lesson $lesson video URL: </label>
@@ -66,81 +67,15 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             exit("Error: The course could not be found!");
         };
 
-        $success_messages = [];
-
         for ($lesson = 1; $lesson < intval($number_of_lessons) + 1; $lesson++) {
-            //Check and validate PPT Files
-            if (isset($_FILES["lesson-$lesson-ppt"]["name"])) {
-                //Get file info
-                $lesson_ppt = $_FILES["lesson-$lesson-ppt"]["name"];
-                $file_size = $_FILES["lesson-$lesson-ppt"]['size'];
-                $ppt_tmp = $_FILES["lesson-$lesson-ppt"]['tmp_name'];
-                $file_type = $_FILES["lesson-$lesson-ppt"]['type'];
+            //Create lesson directory
+            $lesson_dir = "./courses/$course_name/Lesson $lesson/";
 
-                //Get & check file extension
-                $file_name_parts = explode('.', $_FILES["lesson-$lesson-ppt"]['name']);
-                $file_ext = strtolower(end($file_name_parts));
-                $extensions = ["ppt", "pptx"];
-
-                if (!in_array($file_ext, $extensions)) {
-                    $file_error = true;
-                    exit("Error: Unexpected file extension for $lesson_ppt! Allowed extensions: " . implode(",", $extensions));
-                } elseif ($file_size > 500000) {
-                    $file_error = true;
-                    exit("Error: File ($lesson_ppt) size cannot be greater than 5MB.");
-                }
-            }
-
-            //Check and validate PDF Files
-            if (isset($_FILES["lesson-$lesson-pdf"]["name"])) {
-                //Get file info
-                $lesson_pdf = $_FILES["lesson-$lesson-pdf"]["name"];
-                $file_size = $_FILES["lesson-$lesson-pdf"]['size'];
-                $pdf_tmp = $_FILES["lesson-$lesson-pdf"]['tmp_name'];
-                $file_type = $_FILES["lesson-$lesson-pdf"]['type'];
-
-                //Get & check file extension
-                $file_name_parts = explode('.', $_FILES["lesson-$lesson-pdf"]['name']);
-                $file_ext = strtolower(end($file_name_parts));
-
-                if ($file_ext != "pdf") {
-                    $file_error = true;
-                    exit("Error: Unexpected file extension for $lesson_pdf! Allowed extension: pdf ");
-                } elseif ($file_size > 500000) {
-                    $file_error = true;
-                    exit("Error: File ($lesson_pdf) size cannot be greater than 5MB.");
-                }
-
-                if (!$file_error) {
-                    //Create PPT directory
-                    $lesson_dir = "./courses/$course_name/Lesson $lesson/";
-
-                    //Check if directory exists and set permissions
-                    if (!is_dir($lesson_dir)) {
-                        mkdir($lesson_dir, 0777);
-                    } else {
-                        exit("Error: Directory already exists!");
-                    }
-
-                    $ppt_dir = "./courses/$course_name/Lesson $lesson/$lesson_ppt";
-                    if (!move_uploaded_file($ppt_tmp, $ppt_dir)) {
-                        exit("Error uploading file ($lesson_ppt).");
-                    } else {
-                        array_push($success_messages, "File <b>$lesson_ppt</b> has been uploaded successfully. <br>");
-                    }
-
-                    //Create PDF directory
-                    $pdf_dir = "./courses/$course_name/Lesson $lesson/$lesson_pdf";
-                    if (!file_exists($pdf_dir)) {
-                        if (move_uploaded_file($pdf_tmp, $pdf_dir)) {
-                            array_push($success_messages, "File <b>$lesson_pdf</b> has been uploaded successfully. <br>");
-                        } else {
-                            exit("Error uploading file ($lesson_pdf).");
-                        }
-                    } else {
-                        exit("Error: File ($lesson_pdf) already exists!");
-                    }
-                }
+            //Check if directory exists and set permissions
+            if (!is_dir($lesson_dir)) {
+                mkdir($lesson_dir, 0777);
+            } else {
+                exit("Error: Directory already exists!");
             }
 
             //Get lesson data
@@ -151,21 +86,90 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             $lesson_pdf;
 
 
-            //Insert lesson into database
-            $sql = "INSERT INTO lessons (title, description, pdf, ppt, video, course_id, course_code) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            //Check and validate PPT Files
+            if ($_FILES["lesson-$lesson-ppt"]["error"] === UPLOAD_ERR_OK) {
+                //Get file info
+                $lesson_ppt = $_FILES["lesson-$lesson-ppt"]["name"];
+                $file_size = $_FILES["lesson-$lesson-ppt"]['size'];
+                $file_tmp = $_FILES["lesson-$lesson-ppt"]['tmp_name'];
+                $file_type = $_FILES["lesson-$lesson-ppt"]['type'];
+
+                //Get & check file extension
+                $file_name_parts = explode('.', $_FILES["lesson-$lesson-ppt"]['name']);
+                $file_ext = strtolower(end($file_name_parts));
+                $extensions = ["ppt", "pptx"];
+
+                if (!in_array($file_ext, $extensions)) {
+                    exit("Error: Unexpected file extension for $lesson_ppt! Allowed extensions: " . implode(",", $extensions));
+                } elseif ($file_size > 5242880) {
+                    exit("Error: File ($lesson_ppt) size cannot be greater than 5MB.");
+                }
+
+                $ppt_dir = "./courses/$course_name/Lesson $lesson/$lesson_ppt";
+                if (!file_exists($ppt_dir)) {
+                    if (move_uploaded_file($file_tmp, $ppt_dir)) {
+                        echo "File <b>$lesson_ppt</b> has been uploaded successfully. <br>";
+                    } else {
+                        exit("Error uploading file ($lesson_ppt).");
+                    }
+                } else {
+                    exit("Error: File ($lesson_ppt) already exists!");
+                }
+            } else {
+                $lesson_ppt = null;
+            }
+
+            //Check and validate PDF Files
+            if ($_FILES["lesson-$lesson-pdf"]["error"] === UPLOAD_ERR_OK) {
+                //Get file info
+                $lesson_pdf = $_FILES["lesson-$lesson-pdf"]["name"];
+                $file_size = $_FILES["lesson-$lesson-pdf"]['size'];
+                $file_tmp = $_FILES["lesson-$lesson-pdf"]['tmp_name'];
+                $file_type = $_FILES["lesson-$lesson-pdf"]['type'];
+
+                //Get & check file extension
+                $file_name_parts = explode('.', $_FILES["lesson-$lesson-pdf"]['name']);
+                $file_ext = strtolower(end($file_name_parts));
+
+                if ($file_ext != "pdf") {
+                    exit("Error: Unexpected file extension for $lesson_pdf! Allowed extension: pdf ");
+                } elseif ($file_size > 5242880) {
+                    exit("Error: File ($lesson_pdf) size cannot be greater than 5MB.");
+                }
+
+                $pdf_dir = "./courses/$course_name/Lesson $lesson/$lesson_pdf";
+                if (!file_exists($pdf_dir)) {
+                    if (move_uploaded_file($file_tmp, $pdf_dir)) {
+                        echo "File <b>$lesson_pdf</b> has been uploaded successfully. <br>";
+                    } else {
+                        exit("Error uploading file ($lesson_pdf).");
+                    }
+                } else {
+                    exit("Error: File ($lesson_pdf) already exists!");
+                }
+            } else {
+                $lesson_pdf = null;
+            }
+
+            $sql = "INSERT INTO lessons (title, description, pdf, ppt, video, course_id) VALUES (?, ?, ?, ?, ?, ?)";
             $stmt = $mysqli->prepare($sql);
-            $result = $stmt->bind_param('sssssss', $lesson_title, $lesson_description, $lesson_ppt, $lesson_pdf, $lesson_video, $course_id, $course_code);
+
+            //Checking conditions
+            if (!empty($lesson_ppt)) {
+                $lesson_pdf = null;
+            } elseif (!empty($lesson_pdf)) {
+                $lesson_ppt = null;
+            } else {
+                $lesson_pdf = null;
+                $lesson_ppt = null;
+            }
+            $stmt->bind_param('ssssss', $lesson_title, $lesson_description, $lesson_pdf, $lesson_ppt, $lesson_video, $course_id);
             $stmt->execute();
             $stmt->close();
+
+            //Commit the transaction
+            $mysqli->commit();
         }
-
-        // if (!$file_error) {
-        //     $_SESSION["success_messages"] = $success_messages;
-        //     header("Location: success-upload.php");
-        // }
-
-        //Commit the transaction
-        $mysqli->commit();
     } catch (Exception $err) {
         $mysqli->rollback();
         echo 'Error ' . $err->getMessage();
@@ -173,4 +177,5 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         $mysqli->close();
     }
 }
+
 ?>

@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
             if (!empty($email) && !empty($name) && !empty($surname) && !empty($dob) && !empty($phone) && !empty($password) && !empty($confirm_password)) {
                 if (strlen($password) < 8) {
-                    $message = "<p style='color: red;'>The password must be at least 8 characters long.</p>";
+                    die("<p style='color: red;'>The password must be at least 8 characters long.</p>");
                 }
                 if ($password !== $confirm_password) {
                     $message = "<p style='color: red;'>Passwords must match.</p>";
@@ -45,14 +45,14 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                         $stmt->execute();
                         $stmt->close();
                         $message = "<p style='color: green;'>Account created successfully.</p>";
+                        //Commit the transaction
+                        $mysqli->commit();
                     }
                 }
             } else {
                 $message = "<p style='color: red;'>All inputs must be completed.</p>";
             }
         };
-        //Commit the transaction
-        $mysqli->commit();
     } catch (Exception $err) {
         $mysqli->rollback();
         echo 'Error ' . $err->getMessage();
@@ -88,11 +88,11 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 </div>
                 <div>
                     <label for="password">Password: </label>
-                    <input type="password" name="password" required>
+                    <input type="password" name="password" minlength="8" required>
                 </div>
                 <div>
                     <label for="confirm_password">Confirm password: </label>
-                    <input type="password" name="confirm_password" required>
+                    <input type="password" name="confirm_password" minlength="8" required>
                 </div>
                 <button name="submit" class="default-button">Register</button>
             </form>
