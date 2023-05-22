@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: May 22, 2023 at 01:45 AM
+-- Generation Time: May 22, 2023 at 10:48 AM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS `enrolment` (
   `course_id` int NOT NULL,
   `price` int NOT NULL,
   `teacher_id` int NOT NULL,
+  `joining_date` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`user_id`,`course_id`),
   KEY `rel2` (`course_id`),
   KEY `re3` (`teacher_id`)
@@ -77,8 +78,9 @@ CREATE TABLE IF NOT EXISTS `enrolment` (
 -- Dumping data for table `enrolment`
 --
 
-INSERT INTO `enrolment` (`user_id`, `course_id`, `price`, `teacher_id`) VALUES
-(10001, 101, 60, 10001);
+INSERT INTO `enrolment` (`user_id`, `course_id`, `price`, `teacher_id`, `joining_date`) VALUES
+(10001, 101, 60, 10001, '2023-05-22 10:01:53.956451'),
+(10001, 102, 60, 10001, '2023-05-22 10:47:47.349778');
 
 -- --------------------------------------------------------
 
@@ -130,7 +132,7 @@ INSERT INTO `lessons` (`id`, `title`, `description`, `pdf`, `ppt`, `video`, `cou
 (50031, 'Python dictionaries', 'A Python course is designed to teach individuals the fundamentals and advanced concepts of the Python programming language. Python is a versatile and widely-used programming language known for its simplicity, readability, and vast range of applications. The course aims to equip students with the skills and knowledge needed to develop various types of software, ranging from web applications to data analysis tools.', NULL, NULL, 'https://www.youtube.com/watch?v=MZZSMaEAC2g&pp=ygUTcHl0aG9uIGRpY3Rpb25hcmllcw%3D%3D', 123),
 (50032, 'Python Overview', 'A Python course is designed to teach individuals the fundamentals and advanced concepts of the Python programming language. Python is a versatile and widely-used programming language known for its simplicity, readability, and vast range of applications. The course aims to equip students with the skills and knowledge needed to develop various types of software, ranging from web applications to data analysis tools.', 'Python Overview.pdf', NULL, 'https://www.youtube.com/watch?v=Y8Tko2YC5hA', 123),
 (50033, '5 Unique Python Projects', 'A Python course is designed to teach individuals the fundamentals and advanced concepts of the Python programming language. Python is a versatile and widely-used programming language known for its simplicity, readability, and vast range of applications. The course aims to equip students with the skills and knowledge needed to develop various types of software, ranging from web applications to data analysis tools.', NULL, NULL, 'https://www.youtube.com/watch?v=_xf1TMs0ysk&pp=ygUPYWR2YW5jZWQgcHl0aG9u', 123),
-(50034, '28 Hours of Java', 'A Java course is designed to teach individuals the fundamentals and advanced concepts of the Java programming language. Java is a popular and widely-used programming language known for its platform independence, robustness, and versatility. The course aims to provide students with a strong foundation in Java programming, enabling them to develop various types of software applications, ranging from desktop applications to mobile apps and enterprise systems.', NULL, NULL, 'https://www.youtube.com/watch?v=CYn2Vq0lwao&pp=ygUEamF2YQ%3D%3D', 124),
+(50034, 'Introduction to Java', 'A Java course is designed to teach individuals the fundamentals and advanced concepts of the Java programming language. Java is a popular and widely-used programming language known for its platform independence, robustness, and versatility. The course aims to provide students with a strong foundation in Java programming, enabling them to develop various types of software applications, ranging from desktop applications to mobile apps and enterprise systems.', NULL, NULL, 'https://www.youtube.com/watch?v=eIrMbAQSU34', 124),
 (50035, 'Java Management Service - Managing Your Java Estate Just Got Easier', 'A Java course is designed to teach individuals the fundamentals and advanced concepts of the Java programming language. Java is a popular and widely-used programming language known for its platform independence, robustness, and versatility. The course aims to provide students with a strong foundation in Java programming, enabling them to develop various types of software applications, ranging from desktop applications to mobile apps and enterprise systems.', NULL, NULL, 'https://www.youtube.com/watch?v=tvcC2FMwIIo&pp=ygUEamF2YQ%3D%3D', 124),
 (50036, 'Java Overview', 'A Java course is designed to teach individuals the fundamentals and advanced concepts of the Java programming language. Java is a popular and widely-used programming language known for its platform independence, robustness, and versatility. The course aims to provide students with a strong foundation in Java programming, enabling them to develop various types of software applications, ranging from desktop applications to mobile apps and enterprise systems.', 'Java Overview.pdf', NULL, 'https://www.youtube.com/watch?v=mAtkPQO1FcA', 124),
 (50037, '5 Java concepts you MUST KNOW!', 'A Java course is designed to teach individuals the fundamentals and advanced concepts of the Java programming language. Java is a popular and widely-used programming language known for its platform independence, robustness, and versatility. The course aims to provide students with a strong foundation in Java programming, enabling them to develop various types of software applications, ranging from desktop applications to mobile apps and enterprise systems.', NULL, NULL, 'https://www.youtube.com/watch?v=BJxozKJlDvg&pp=ygUEamF2YQ%3D%3D', 124),
