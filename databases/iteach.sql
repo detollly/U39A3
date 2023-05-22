@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 21, 2023 at 02:56 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.0.28
+-- Host: 127.0.0.1:3306
+-- Generation Time: May 22, 2023 at 11:11 PM
+-- Server version: 8.0.31
+-- PHP Version: 8.0.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,17 +27,20 @@ SET time_zone = "+00:00";
 -- Table structure for table `courses`
 --
 
-CREATE TABLE `courses` (
-  `id` int(6) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `category` varchar(25) NOT NULL,
+DROP TABLE IF EXISTS `courses`;
+CREATE TABLE IF NOT EXISTS `courses` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `category` varchar(25) COLLATE utf8mb4_general_ci NOT NULL,
   `cost` float NOT NULL,
-  `teacher_id` int(6) NOT NULL,
-  `published_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `language` varchar(255) NOT NULL,
-  `students_enrolled` int(3) NOT NULL,
-  `course_code` varchar(6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `teacher_id` int NOT NULL,
+  `published_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `language` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `students_enrolled` int NOT NULL,
+  `course_code` varchar(6) COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `teacher` (`teacher_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `courses`
@@ -50,7 +53,35 @@ INSERT INTO `courses` (`id`, `name`, `category`, `cost`, `teacher_id`, `publishe
 (122, 'PHP', 'Web Development', 39.99, 10001, '2023-05-20 22:06:21', 'English, Spanish', 0, ''),
 (123, 'Python', 'Web Development', 69.99, 10001, '2023-05-20 22:18:24', 'English, German', 0, ''),
 (124, 'Java', 'Programming', 69.99, 10001, '2023-05-20 22:06:25', 'English', 0, ''),
-(125, 'C++', 'Programming', 59.99, 10001, '2023-05-20 22:06:27', 'English', 0, '');
+(125, 'C++', 'Programming', 59.99, 10001, '2023-05-20 22:06:27', 'English', 0, ''),
+(127, 'HTML', 'Web Development', 29.99, 10001, '2023-05-22 00:24:29', 'English', 0, 'R404');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `enrolment`
+--
+
+DROP TABLE IF EXISTS `enrolment`;
+CREATE TABLE IF NOT EXISTS `enrolment` (
+  `user_id` int NOT NULL,
+  `course_id` int NOT NULL,
+  `price` int NOT NULL,
+  `teacher_id` int NOT NULL,
+  `joining_date` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`user_id`,`course_id`),
+  KEY `rel2` (`course_id`),
+  KEY `re3` (`teacher_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `enrolment`
+--
+
+INSERT INTO `enrolment` (`user_id`, `course_id`, `price`, `teacher_id`, `joining_date`) VALUES
+(10001, 101, 60, 10001, '2023-05-22 10:01:53.956451'),
+(10001, 102, 60, 10001, '2023-05-22 10:47:47.349778'),
+(10001, 127, 30, 10001, '2023-05-22 22:41:02.264730');
 
 -- --------------------------------------------------------
 
@@ -58,15 +89,18 @@ INSERT INTO `courses` (`id`, `name`, `category`, `cost`, `teacher_id`, `publishe
 -- Table structure for table `lessons`
 --
 
-CREATE TABLE `lessons` (
-  `id` int(6) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `description` varchar(1000) NOT NULL,
-  `pdf` varchar(255) DEFAULT NULL,
-  `ppt` varchar(255) DEFAULT NULL,
-  `video` varchar(255) DEFAULT NULL,
-  `course_id` int(6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+DROP TABLE IF EXISTS `lessons`;
+CREATE TABLE IF NOT EXISTS `lessons` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` varchar(1000) COLLATE utf8mb4_general_ci NOT NULL,
+  `pdf` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `ppt` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `video` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `course_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `course_id` (`course_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=50052 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `lessons`
@@ -99,7 +133,7 @@ INSERT INTO `lessons` (`id`, `title`, `description`, `pdf`, `ppt`, `video`, `cou
 (50031, 'Python dictionaries', 'A Python course is designed to teach individuals the fundamentals and advanced concepts of the Python programming language. Python is a versatile and widely-used programming language known for its simplicity, readability, and vast range of applications. The course aims to equip students with the skills and knowledge needed to develop various types of software, ranging from web applications to data analysis tools.', NULL, NULL, 'https://www.youtube.com/watch?v=MZZSMaEAC2g&pp=ygUTcHl0aG9uIGRpY3Rpb25hcmllcw%3D%3D', 123),
 (50032, 'Python Overview', 'A Python course is designed to teach individuals the fundamentals and advanced concepts of the Python programming language. Python is a versatile and widely-used programming language known for its simplicity, readability, and vast range of applications. The course aims to equip students with the skills and knowledge needed to develop various types of software, ranging from web applications to data analysis tools.', 'Python Overview.pdf', NULL, 'https://www.youtube.com/watch?v=Y8Tko2YC5hA', 123),
 (50033, '5 Unique Python Projects', 'A Python course is designed to teach individuals the fundamentals and advanced concepts of the Python programming language. Python is a versatile and widely-used programming language known for its simplicity, readability, and vast range of applications. The course aims to equip students with the skills and knowledge needed to develop various types of software, ranging from web applications to data analysis tools.', NULL, NULL, 'https://www.youtube.com/watch?v=_xf1TMs0ysk&pp=ygUPYWR2YW5jZWQgcHl0aG9u', 123),
-(50034, '28 Hours of Java', 'A Java course is designed to teach individuals the fundamentals and advanced concepts of the Java programming language. Java is a popular and widely-used programming language known for its platform independence, robustness, and versatility. The course aims to provide students with a strong foundation in Java programming, enabling them to develop various types of software applications, ranging from desktop applications to mobile apps and enterprise systems.', NULL, NULL, 'https://www.youtube.com/watch?v=CYn2Vq0lwao&pp=ygUEamF2YQ%3D%3D', 124),
+(50034, 'Introduction to Java', 'A Java course is designed to teach individuals the fundamentals and advanced concepts of the Java programming language. Java is a popular and widely-used programming language known for its platform independence, robustness, and versatility. The course aims to provide students with a strong foundation in Java programming, enabling them to develop various types of software applications, ranging from desktop applications to mobile apps and enterprise systems.', NULL, NULL, 'https://www.youtube.com/watch?v=eIrMbAQSU34', 124),
 (50035, 'Java Management Service - Managing Your Java Estate Just Got Easier', 'A Java course is designed to teach individuals the fundamentals and advanced concepts of the Java programming language. Java is a popular and widely-used programming language known for its platform independence, robustness, and versatility. The course aims to provide students with a strong foundation in Java programming, enabling them to develop various types of software applications, ranging from desktop applications to mobile apps and enterprise systems.', NULL, NULL, 'https://www.youtube.com/watch?v=tvcC2FMwIIo&pp=ygUEamF2YQ%3D%3D', 124),
 (50036, 'Java Overview', 'A Java course is designed to teach individuals the fundamentals and advanced concepts of the Java programming language. Java is a popular and widely-used programming language known for its platform independence, robustness, and versatility. The course aims to provide students with a strong foundation in Java programming, enabling them to develop various types of software applications, ranging from desktop applications to mobile apps and enterprise systems.', 'Java Overview.pdf', NULL, 'https://www.youtube.com/watch?v=mAtkPQO1FcA', 124),
 (50037, '5 Java concepts you MUST KNOW!', 'A Java course is designed to teach individuals the fundamentals and advanced concepts of the Java programming language. Java is a popular and widely-used programming language known for its platform independence, robustness, and versatility. The course aims to provide students with a strong foundation in Java programming, enabling them to develop various types of software applications, ranging from desktop applications to mobile apps and enterprise systems.', NULL, NULL, 'https://www.youtube.com/watch?v=BJxozKJlDvg&pp=ygUEamF2YQ%3D%3D', 124),
@@ -109,7 +143,9 @@ INSERT INTO `lessons` (`id`, `title`, `description`, `pdf`, `ppt`, `video`, `cou
 (50041, 'C++ Overview', 'A C++ course is designed to teach individuals the fundamentals and advanced concepts of the C++ programming language. C++ is a powerful and versatile programming language widely used in various domains, including system programming, game development, and high-performance applications. The course aims to provide students with a solid foundation in C++ programming, enabling them to develop efficient and complex software systems.dddd', 'C++ Overview.pdf', NULL, 'https://www.youtube.com/watch?v=S3nx34WFXjI', 125),
 (50042, 'Classes In C++', 'A C++ course is designed to teach individuals the fundamentals and advanced concepts of the C++ programming language. C++ is a powerful and versatile programming language widely used in various domains, including system programming, game development, and high-performance applications. The course aims to provide students with a solid foundation in C++ programming, enabling them to develop efficient and complex software systems.', NULL, NULL, 'https://www.youtube.com/watch?v=vIcOhM_Vkc4&pp=ygUDQysr', 125),
 (50043, 'C vs C++ vs C#', 'A C++ course is designed to teach individuals the fundamentals and advanced concepts of the C++ programming language. C++ is a powerful and versatile programming language widely used in various domains, including system programming, game development, and high-performance applications. The course aims to provide students with a solid foundation in C++ programming, enabling them to develop efficient and complex software systems.', NULL, NULL, 'https://www.youtube.com/watch?v=sNMtjs_wQiE&pp=ygUDQysr', 125),
-(50044, 'Car Game in C++ for Beginners', 'A C++ course is designed to teach individuals the fundamentals and advanced concepts of the C++ programming language. C++ is a powerful and versatile programming language widely used in various domains, including system programming, game development, and high-performance applications. The course aims to provide students with a solid foundation in C++ programming, enabling them to develop efficient and complex software systems.', NULL, NULL, 'https://www.youtube.com/watch?v=X4LyyvGLABg&pp=ygUDQysr', 125);
+(50044, 'Car Game in C++ for Beginners', 'A C++ course is designed to teach individuals the fundamentals and advanced concepts of the C++ programming language. C++ is a powerful and versatile programming language widely used in various domains, including system programming, game development, and high-performance applications. The course aims to provide students with a solid foundation in C++ programming, enabling them to develop efficient and complex software systems.', NULL, NULL, 'https://www.youtube.com/watch?v=X4LyyvGLABg&pp=ygUDQysr', 125),
+(50050, 'Intro to HTML', 'This is just an introduction to the web development basics.', NULL, 'Introduction to HTML.pptx', 'https://www.youtube.com/watch?v=qz0aGYrrlhU', 127),
+(50051, 'HTML Div', 'Divs are used to separate content.', 'HTML Flexbox.pdf', NULL, 'https://www.youtube.com/watch?v=kGA9RIFiyIE', 127);
 
 -- --------------------------------------------------------
 
@@ -117,16 +153,18 @@ INSERT INTO `lessons` (`id`, `title`, `description`, `pdf`, `ppt`, `video`, `cou
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
-  `id` int(6) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `surname` varchar(50) NOT NULL,
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `surname` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `dob` date NOT NULL,
-  `phone` varchar(13) NOT NULL,
-  `type` varchar(1) NOT NULL,
-  `password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `phone` varchar(13) COLLATE utf8mb4_general_ci NOT NULL,
+  `type` varchar(1) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10017 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
@@ -134,53 +172,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `email`, `name`, `surname`, `dob`, `phone`, `type`, `password`) VALUES
 (10001, 'cdaaniel@outlook.com', 'Daniel', 'Cobzariu', '2023-05-10', '07402883319', 'A', '$2y$10$RqedvOe1danXQo/5cJs9auhWaWsCwjyvTkc8JXjE1XSDavuPo4pYG'),
-(10002, 'test@gmail.com', 'Test', 'Account', '2019-05-22', '073636732237', 'S', '$2y$10$I.wDO7Yf6ImY1PrFK.xCnuFMwpv82fEBMqKaC51hg6OPSfwYMTAD.');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `courses`
---
-ALTER TABLE `courses`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `teacher` (`teacher_id`);
-
---
--- Indexes for table `lessons`
---
-ALTER TABLE `lessons`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `course_id` (`course_id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `courses`
---
-ALTER TABLE `courses`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
-
---
--- AUTO_INCREMENT for table `lessons`
---
-ALTER TABLE `lessons`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50045;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10004;
+(10002, 'test@gmail.com', 'Test', 'Account', '2019-05-22', '073636732237', 'S', '$2y$10$I.wDO7Yf6ImY1PrFK.xCnuFMwpv82fEBMqKaC51hg6OPSfwYMTAD.'),
+(10016, 'daniel_cobzariu@yahoo.ro', 'Daniel', 'C', '2023-05-22', '07402883319', 'S', '$2y$10$.7ZT17yWDvNtMogAi0R28uVlbFO2RlK1WLMdJ7frRV3TYTlEGsZA2');
 
 --
 -- Constraints for dumped tables
@@ -191,6 +184,14 @@ ALTER TABLE `users`
 --
 ALTER TABLE `courses`
   ADD CONSTRAINT `courses_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `enrolment`
+--
+ALTER TABLE `enrolment`
+  ADD CONSTRAINT `enrolment_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `enrolment_ibfk_2` FOREIGN KEY (`teacher_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `enrolment_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `lessons`
