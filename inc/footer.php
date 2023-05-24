@@ -2,11 +2,11 @@
 <footer>
     <div class="footerLinks">
         <a id="homeLink" href="../HTML/index.html"><object type="image/svg+xml" data="./images/logo.svg" width="auto" height="50px" style="pointer-events: none;"></object></a>
-        <a href="../HTML/index.html">Homepage</a>
-        <a href="../HTML/index.html#courseNav">Courses</a>
-        <a href="../HTML/index.html#contact">Contact Us</a>
-        <a href="../HTML/signup.html">Sign Up</a>
-        <a href="../HTML/login.html">Login</a>
+        <a href="index">Homepage</a>
+        <a href="index#courseNav">Courses</a>
+        <a href="index#contact">Contact Us</a>
+        <a href="register">Sign Up</a>
+        <a href="login">Login</a>
         <a href="https://www.youtube.com/channel/UCGwamXNRqmpx5Aw8qEezjaw">
             <i class="fa-brands fa-youtube"><span> Youtube</span></i>
         </a>
