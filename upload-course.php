@@ -2,15 +2,33 @@
 include "./inc/header.php";
 ?>
 
-<head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-</head>
-<div>
-    <?php include "./inc/get-user-data.php"; ?>
-    <section>
-        <div>
+
+<style>
+    form {
+        width: 100%;
+    }
+
+    form div {
+        display: flex;
+        flex-direction: column;
+        min-width: 100% !important;
+    }
+
+    .signupForm select {
+        max-width: 100%;
+        border: solid 1px var(--textColor);
+        height: 45px;
+        font-size: 16px;
+        padding: 10px;
+        margin-top: 1rem;
+    }
+</style>
+
+
+<?php include "./inc/get-user-data.php"; ?>
+<section class="content">
+    <div class="contentContainer">
+        <div class="signupForm">
             <h1>Upload course</h1>
             <?php echo $message ?? null; ?>
             <form method="post" action="process-add-course.php">
@@ -58,8 +76,12 @@ include "./inc/header.php";
                     <input type="checkbox" required>
                     <p>I confirm that I double checked the details.</p>
                 </div>
-                <button name="submit">Upload course</button>
+                <div>
+                    <button name="submit" id="submit">Upload course</button>
+                </div>
             </form>
         </div>
-    </section>
+    </div>
+</section>
 </div>
+<?php require "./inc/footer.php" ?>

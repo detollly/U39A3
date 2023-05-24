@@ -321,7 +321,6 @@ nav .nav a svg {
 iframe {
   width: 60%;
   aspect-ratio: 16 / 9;
-  z-index: -1 !important;
 }
 /**end of video styles~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
 
@@ -483,7 +482,8 @@ footer div a i span {
 .signupForm,
 .loginForm {
   min-height: 70vh;
-  min-width: 600px;
+  width: 100%;
+  max-width: 600px;
 }
 .signupForm h1,
 .signupForm p,
@@ -491,15 +491,12 @@ footer div a i span {
 .loginForm p {
   text-align: center;
 }
-.signupForm #name,
-.signupForm #email,
-.signupForm #password,
-.loginForm #email,
-.loginForm #password {
-  width: 100%;
+.signupForm input,
+.loginForm input {
+  max-width: 100%;
   border: solid 1px var(--textColor);
-  height: 30px;
-  font-size: 24px;
+  height: 45px;
+  font-size: 16px;
   padding: 10px;
   margin-top: 1rem;
 }
@@ -516,13 +513,15 @@ footer div a i span {
   transition: 0.3s;
   cursor: pointer;
 }
+
 .signupForm #submit:hover,
 .loginForm #submit:hover {
   color: var(--textColor);
   background: var(--backColor);
 }
 .loginLinks {
-  width: 600px;
+  width: 100%;
+  max-width: 600px;
   display: flex;
   flex-direction: row;
 }
@@ -617,7 +616,7 @@ footer div a i span {
   .signupForm,
   .loginForm {
     min-height: 70vh;
-    width: 90%;
+    max-width: 90% !important;
   }
   .gridContainer {
     grid-template-columns: repeat(1, 1fr);
@@ -785,7 +784,7 @@ footer div a i span {
   .signupForm,
   .loginForm {
     min-height: 70vh;
-    width: 90%;
+    min-width: 90%;
   }
 }
 
@@ -797,3 +796,147 @@ footer div a i span {
   }
 }
 /** end of media queries ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+
+/**Add this to the main CSS document and it should work fine for the payment page**/
+/** payment page styles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+.payment {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.paymentSection {
+  margin-left: 30px;
+  margin-right: 30px;
+  width: 50%;
+}
+.paymentSection h4,
+.paymentSection h3 {
+  text-align: left;
+}
+
+.paymentSection h3 {
+  font-weight: bold;
+}
+.paymentSection form #email,
+.paymentSection form #address1,
+.paymentSection form #address2 {
+  max-width: 100%;
+}
+.paymentSection form #fname,
+.paymentSection form #lname,
+.paymentSection form #country,
+.paymentSection form #postcode,
+.paymentSection form #phone {
+  width: 47%;
+}
+.paymentSection form {
+  display: flex;
+  flex-direction: column;
+}
+
+.paymentSection form div {
+  display: flex;
+  flex-direction: row;
+}
+.paymentSection form div input:nth-child(2) {
+  margin-left: auto;
+}
+.paymentMethod {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+}
+.paymentMethod h3 {
+  text-align: left;
+}
+.paymentMethod div {
+  display: flex;
+  flex-direction: column;
+  border: solid 1px var(--accentColor);
+  padding: 18px 0;
+}
+.paymentMethod div button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 80%;
+  margin: 10px auto;
+  padding: 10px 5px;
+  height: 50%;
+  text-align: center;
+  font-size: 20px;
+  border: solid 1px var(--accentColor);
+  text-decoration: none;
+  color: var(--textColor);
+  transition: 0.3s;
+}
+.paymentMethod div button.active {
+  border: solid 1px var(--accentColor);
+  background: var(--accentColor);
+  color: var(--backColor);
+}
+.paymentMethod div button:hover {
+  border: solid 1px var(--accentColor);
+  background: var(--accentColor);
+  color: var(--backColor);
+}
+.paymentMethod div span i {
+  font-size: 30px;
+  margin-left: 10px;
+}
+.paymentSection.orderSummary {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+.paymentSection img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+.paymentDescription,
+.paymentTotal {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.paymentTotal {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-top: solid 2px var(--accentColor);
+}
+.smallHeading {
+  display: none;
+}
+#buyButton {
+  margin: 10px 0;
+  padding: 10px 20px;
+  border: solid 1px var(--accentColor);
+  background: var(--accentColor);
+  color: var(--backColor);
+  transition: 0.3s;
+  text-align: center;
+  cursor: pointer;
+}
+#buyButton:hover {
+  border: solid 1px var(--accentColor);
+  background: var(--backColor);
+  color: var(--textColor);
+}
+@media (max-width: 1150px) {
+  .payment {
+    flex-direction: column;
+  }
+  .paymentSection {
+    width: 90%;
+  }
+  .smallHeading {
+    display: block;
+  }
+  .bigHeading {
+    display: none;
+  }
+}
+/** end of payment page styles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/

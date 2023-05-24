@@ -2,7 +2,7 @@
 include "./inc/header.php";
 
 if (isset($_SESSION["user_id"])) {
-    header("Location: home.php");
+    header("Location: index");
     exit;
 }
 
@@ -60,10 +60,27 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 }
 ?>
 
-<body>
-    <section>
-        <div class="container login">
-            <h1>Register</h1>
+<style>
+    form {
+        width: 100%;
+    }
+
+    form div {
+        display: flex;
+        flex-direction: column;
+        min-width: 100% !important;
+    }
+</style>
+
+<section class="content">
+    <div class="contentContainer">
+        <div class="loginLinks">
+            <a class="active" href="register">Sign Up</a>
+            <a href="login">Login</a>
+        </div>
+        <div class="signupForm">
+            <h1><br>Sign Up</h1><br>
+            <p>Lorem ipsum dolor sit amet adipiscing elit.</p><br>
             <?php echo $message ?? null; ?>
             <form method="post">
                 <div>
@@ -94,12 +111,16 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                     <label for="confirm_password">Confirm password: </label>
                     <input type="password" name="confirm_password" minlength="8" required>
                 </div>
-                <button name="submit" class="default-button">Register</button>
+                <div>
+                    <button name="submit" id="submit">Register</button>
+
+                </div>
             </form>
-            <p>Already have an account? Login <a href="login.php">here.</a></p>
+            <p style="margin-top: 2rem;">Already have an account? Login <a href="login.php">here.</a></p>
+
         </div>
-    </section>
-</body>
+</section>
+
 
 <?php
 

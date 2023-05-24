@@ -1,5 +1,5 @@
 <!--  Footer -->
-<footer style="min-width: 100vw !important;">
+<footer>
     <div class="footerLinks">
         <a id="homeLink" href="../HTML/index.html"><object type="image/svg+xml" data="./images/logo.svg" width="auto" height="50px" style="pointer-events: none;"></object></a>
         <a href="../HTML/index.html">Homepage</a>
@@ -24,6 +24,7 @@
         <a>Cookies Settings</a>
     </div>
 </footer>
+
 </body>
 
 </html>

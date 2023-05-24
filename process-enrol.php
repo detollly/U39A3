@@ -2,46 +2,8 @@
 require "./inc/header.php";
 require "./inc/get-course-date.php";
 $course_id = filter_var($_GET["course_id"], FILTER_SANITIZE_SPECIAL_CHARS);
-
 $course = getCourseData($course_id);
 ?>
-<div class="d-flex justify-content-between">
-    <div>
-        <form method="post">
-            <h1>Payment details</h1>
-            <div>
-                <label for="card_number">Card Number:</label>
-                <input type="text" id="card_number" name="card_number">
-            </div>
-            <div>
-                <label for="expiry_date">Expiry Date:</label>
-                <input type="text" id="expiry_date" name="expiry_date" placeholder="MM/YY">
-            </div>
-            <div>
-                <label for="cvv">CVV:</label>
-                <input type="text" id="cvv" name="cvv">
-            </div>
-            <div>
-                <label for="cardholder_name">Cardholder Name:</label>
-                <input type="text" id="cardholder_name" name="cardholder_name">
-            </div>
-            <div>
-                <input type="submit" value="Purchase">
-            </div>
-        </form>
-    </div>
-    <div class="d-flex flex-column">
-        <h2>Course Summary</h2>
-        <h3> <?php echo $course['name']; ?></h3>
-        <p> <?php echo $course['category']; ?></p>
-        <p>Total: <?php echo $course['cost']; ?></p>
-    </div>
-</div>
-
-
-
-
-
 
 <?php
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -59,3 +21,50 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     header("Location: view-course.php?course_id=$course_id");
 }
 ?>
+<section class="content contentContainer mx-auto" style="width: 90%; max-width: 1000px; ">
+    <div class="contentContainer">
+        <div class="payment">
+            <div class="paymentSection">
+                <h4 class="bigHeading">Payment</h4>
+                <h2>Billing Address</h2>
+                <form method="get">
+                    <input type="text" id="email" name="email" placeholder=" Email...">
+                    <div>
+                        <input type="text" id="fname" name="fname" placeholder=" First Name...">
+                        <input type="text" id="lname" name="lname" placeholder=" Last Name...">
+                    </div>
+                    <input type="text" id="address1" name="address1" placeholder=" Address Line 1...">
+                    <input type="text" id="address2" name="address2" placeholder=" Address Line 2...">
+                    <div>
+                        <input type="text" id="country" name="country" placeholder=" Country...">
+                        <input type="text" id="postcode" name="postcode" placeholder=" Postcode...">
+                    </div>
+                    <input type="text" id="phone" name="phone" placeholder=" Phone Number...">
+                </form>
+                <div class="paymentMethod">
+                    <h3>Payment Method</h3>
+                    <div>
+                        <button class="active"><span><i class="fa-brands fa-cc-visa"></i><i class="fa-brands fa-cc-mastercard"></i></span>Credit/Debit Card</button>
+                        <button><span><i class="fa-brands fa-paypal"></i></span>PayPal</button>
+                    </div>
+                </div>
+            </div>
+            <div class="paymentSection">
+                <h4 class="smallHeading">Payment</h4><br>
+                <h2>Order Summary</h2>
+                <div class="paymentDescription">
+                    <h3> <?php echo $course['name']; ?></h3>
+                    <h2 id="price"><?php echo $course['cost']; ?></h2>
+                </div>
+                <div class="paymentTotal">
+                    <h3>Total:</h3>
+                    <h3 id="totalPrice"><?php echo $course['cost']; ?></h3>
+                </div>
+                <form method="post">
+                    <button type="submit" id="buyButton">Buy Course</button><br><br>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>

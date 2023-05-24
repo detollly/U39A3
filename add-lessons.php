@@ -1,53 +1,74 @@
 <?php include "./inc/header.php"; ?>
 
-<head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-</head>
-
-<form method="POST" enctype="multipart/form-data">
-    <?php
-    $course_code = filter_var($_GET["course-code"], FILTER_SANITIZE_SPECIAL_CHARS);
-    $course_name = urlencode(filter_var($_GET["course-name"], FILTER_SANITIZE_SPECIAL_CHARS));
-    $number_of_lessons = filter_var($_GET["lesson-number"], FILTER_SANITIZE_SPECIAL_CHARS);
-    $file_error = false;
-
-
-    for ($lesson = 1; $lesson < intval($number_of_lessons) + 1; $lesson++) {
-        echo "
-        <div>
-        <h2>Lesson $lesson</h2>
-            <div>
-                <label for='lesson-$lesson-title'>Lesson $lesson title: </label>
-                <input type='text' name='lesson-$lesson-title' required>
-            </div>
-            <div>
-                <label for='lesson-$lesson-description'>Lesson $lesson description: </label>
-                <input type='text' name='lesson-$lesson-description' required>
-            </div>
-            <div>
-                <label for='lesson-$lesson-ppt'>Lesson $lesson PowerPoint</label>
-                <input type='file' name='lesson-$lesson-ppt'>
-            </div>
-            <div>
-                <label for='lesson-$lesson-pdf'>Lesson $lesson PDF</label>
-                <input type='file' name='lesson-$lesson-pdf'>
-            </div>
-            <div>
-                <label for='lesson-$lesson-video-url'>Lesson $lesson video URL: </label>
-                <input type='text' name='lesson-$lesson-video-url' required >
-                <input type='hidden' name='course-code' value=$course_code> 
-                <input type='hidden' name='course-name' value=$course_name> 
-                <input type='hidden' name='lesson-number' value=$number_of_lessons> 
-            </div>
-        </div>";
+<style>
+    form {
+        width: 100%;
     }
-    ?>
-    <input type='submit'>
 
-</form>
+    form div {
+        display: flex;
+        flex-direction: column;
+        min-width: 100% !important;
+    }
 
+    .signupForm select {
+        max-width: 100%;
+        border: solid 1px var(--textColor);
+        height: 45px;
+        font-size: 16px;
+        padding: 10px;
+        margin-top: 1rem;
+    }
+</style>
+
+
+<section class="content">
+    <div class="contentContainer">
+        <div class="signupForm">
+            <form method="POST" enctype="multipart/form-data">
+                <?php
+                $course_code = filter_var($_GET["course-code"], FILTER_SANITIZE_SPECIAL_CHARS);
+                $course_name = urlencode(filter_var($_GET["course-name"], FILTER_SANITIZE_SPECIAL_CHARS));
+                $number_of_lessons = filter_var($_GET["lesson-number"], FILTER_SANITIZE_SPECIAL_CHARS);
+                $file_error = false;
+
+                for ($lesson = 1; $lesson < intval($number_of_lessons) + 1; $lesson++) {
+                    echo "
+                        <div>
+                        <h2>Lesson $lesson</h2>
+                            <div>
+                                <label for='lesson-$lesson-title'>Lesson $lesson title: </label>
+                                <input type='text' name='lesson-$lesson-title' required>
+                            </div>
+                            <div>
+                                <label for='lesson-$lesson-description'>Lesson $lesson description: </label>
+                                <input type='text' name='lesson-$lesson-description' required>
+                            </div>
+                            <div>
+                                <label for='lesson-$lesson-ppt'>Lesson $lesson PowerPoint</label>
+                                <input type='file' name='lesson-$lesson-ppt'>
+                            </div>
+                            <div>
+                                <label for='lesson-$lesson-pdf'>Lesson $lesson PDF</label>
+                                <input type='file' name='lesson-$lesson-pdf'>
+                            </div>
+                            <div>
+                                <label for='lesson-$lesson-video-url'>Lesson $lesson video URL: </label>
+                                <input type='text' name='lesson-$lesson-video-url' required >
+                                <input type='hidden' name='course-code' value=$course_code> 
+                                <input type='hidden' name='course-name' value=$course_name> 
+                                <input type='hidden' name='lesson-number' value=$number_of_lessons> 
+                            </div>
+                        </div>";
+                }
+                ?>
+                <div>
+                    <input type='submit' id="submit">
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
 <?php
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
     //Sanitise and validate input
@@ -185,3 +206,5 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 }
 
 ?>
+
+<?php require "./inc/footer.php" ?>
