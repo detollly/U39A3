@@ -1,0 +1,33 @@
+/**nav bar styles~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+nav {
+  display: flex;
+  justify-content: center;
+  /* border-bottom: solid var(--accentColor) 2px; */
+}
+nav .nav {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  gap: 20px;
+  min-height: 60px;
+  height: 100%;
+  width: 100%;
+  max-width: var(--maxwidth);
+  background: var(--backColor);
+}
+nav .nav a {
+  margin: 10px 5px;
+  padding: 10px 5px;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+  color: var(--textColor);
+}
+nav .nav a:hover {
+  text-decoration: underline;
+}
+nav .nav .icon {
+  /**hamburger menu style**/
+  display: none;
+  font-size: 24px;
+}

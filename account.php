@@ -3,6 +3,12 @@ require "./inc/header.php";
 require "./inc/get-user-data.php";
 ?>
 
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+</head>
+
 <div class="d-flex w-100 flex-column align-items-center">
     <?php
     echo "<div class='w-50 d-flex flex-column'>
@@ -57,15 +63,12 @@ require "./inc/get-user-data.php";
                     $thumbnail_url = $data->items[0]->snippet->thumbnails->medium->url;
 
                     echo "
-                    <div class='card text-dark' style='width: 18rem;'>
-                        <img class='card-img-top' src='$thumbnail_url' alt='Card image cap'>
-                        <div class='card-body'>
-                            <h5 class='card-title text-dark'>$course_title</h5>
-                            <p class='card-text'>" . substr($lesson_description, 0, strpos($lesson_description, '.') + 1) . "</p>
-                            <div class='d-flex justify-content-between align-items-start'>
-                                <a href='view-course.php?course_id=$course_id'class='btn btn-primary'>View Course</a>
-                            </div>
-                        </div>
+                    <div class='gridItem'>
+                        <img src='$thumbnail_url' style='max-width: 100%'>
+                        <h3 style='margin-top: 1rem'>$course_title</h3>
+                        <p>" . substr($lesson_description, 0, strpos($lesson_description, '.') + 1) . "</p>
+                        <div class='divider'></div>
+                        <a href='view-course.php?course_id=$course_id'>View Course</a>
                     </div>
                 ";
                 }
