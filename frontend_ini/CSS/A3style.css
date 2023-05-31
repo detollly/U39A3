@@ -1,0 +1,675 @@
+*{/**global styles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+	margin:0;
+	padding:0;
+	font-family: sans-serif;
+    line-height: 1.5;
+}
+:root{/**Variables to allow fast global changes**/
+	--backColor:#ffffff;
+	--textColor:#000000;
+    --accentColor:#103D88 ;
+    --ratingColor:#E5EE2D;
+    --maxwidth:1500px;
+}
+body{/**sets  background colour~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+	background:var(--backColor);
+}
+/** end of global styles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+
+/**nav bar styles~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+nav{
+    display: flex;
+    justify-content: center;
+    border-bottom: solid var(--accentColor) 2px;
+}
+nav .nav{
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap:20px;
+    min-height: 100px;
+    height: 100%;
+    width: 100%;
+    max-width: var(--maxwidth);
+	background:var(--backColor);
+}
+nav .nav a{
+    margin:10px 5px;
+    padding: 10px 5px;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    color:var(--textColor);
+}
+nav .nav a:hover{
+    text-decoration: underline;
+}
+nav .nav .icon{/**hamburger menu style**/
+	display:none;
+	font-size: 24px;
+}
+#signUp{
+    width:75px;
+    text-align: center;
+    border: solid var(--accentColor) 1px;
+    transition: 1s;
+}
+#signUp:hover{
+    color: var(--backColor);
+    background:var(--accentColor) ;
+}
+#login{
+    width:75px;
+    text-align: center;
+    color: var(--backColor);
+    background: var(--accentColor);
+    border: solid var(--accentColor) 1px;
+}
+#homeLink{
+    margin:0 auto 0 10px;
+}
+nav .nav a svg{
+    height: 200%;
+}
+#logo{ 
+    max-width: 50px;
+    max-height: 50px;
+}
+/**end of nav bar styles~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+
+/**banner styles~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+.banner{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    height: 300px;
+    background:linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url("../Images/banner.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.banner h1, .banner p{
+    color: var(--backColor);
+    text-align: center ;
+    width: 75ch;
+}
+#search{
+    width: 75ch;
+    height: 30px;
+    padding: 5px;
+    border: solid 1px #000000;
+}
+/**end of banner styles~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+
+/**course navigation styles~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+.courseNav{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top:solid 2px var(--accentColor);
+    border-bottom:solid 2px var(--accentColor);
+}
+.courseNav div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 75px;
+    width: 100%;
+    max-width: var(--maxwidth);
+}
+.courseNav a{
+    margin:0 auto 0 auto ;
+    color: var(--textColor);
+    text-decoration: none;
+}
+.courseNav a:hover{
+    text-decoration: underline;
+}
+.courseNav a.active{
+    font-weight:bold;
+}
+
+/**end of course navigation styles~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+
+/**course grid navigation styles~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+.content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.contentContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: var(--maxwidth);
+    gap:10px;
+    margin-top: 20px;
+    margin-bottom:20px;
+}
+.contentContainer h3, .contentContainer h4{
+	text-align:center;
+	max-width:75ch;
+}
+.moreButton{
+    width: 75px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--backColor);
+    background:var(--accentColor) ;
+    border:solid 1px var(--accentColor);
+    margin:10px 5px;
+    padding: 10px 5px;
+    transition: 1s;
+}
+.moreButton:hover{
+    color: var(--textColor);
+    background:var(--backColor) ;
+}
+.gridContainer {
+    display: grid;
+    align-content: center;
+    grid-template-columns: repeat(4,1fr);
+    gap:20px;
+}
+.gridItem div a{
+    margin:10px 5px;
+    padding: 10px 5px;
+    width:75px;
+    text-align: center;
+    vertical-align: middle;
+}
+.gridItem {
+    border: 1px solid var(--accentColor);
+    padding: 10px;
+    max-width: 300px;
+}
+.gridItem h4, .gridItem h3 {
+	text-align:left;
+}
+.gridItem img{
+    width: 300px;
+    aspect-ratio: 16 / 9;
+}
+/**end of course grid navigation styles~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+
+/**about styles~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+.about{
+	display: flex;
+	flex-direction:column;
+	justify-content:center;
+	width:100%;
+}
+.about h4, .about h3{
+	margin-left:auto;margin-right:auto;
+	width:100%;
+	text-align:center;
+}
+.about div{
+	display: flex;
+	flex-direction:row;
+	justify-content:center;
+}
+.button1{
+	width: 75px;
+    text-align: center;
+    text-decoration: none;
+	color: var(--textColor);
+	border:solid 1px var(--accentColor);
+    margin:10px 10px;
+    padding: 10px 10px;
+    transition: 1s;
+}
+.button1:hover{
+	text-decoration:underline;
+	background:var(--accentColor);
+	color:var(--backColor);
+}
+.button2{
+	width: 75px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--textColor);
+    background:var(--backColor);
+	border:solid 1px var(--backColor);
+    margin:10px 10px;
+    padding: 10px 10px;
+    transition: 1s;
+}
+.button2:hover{
+	text-decoration:underline;
+	border:solid 1px var(--accentColor);
+}
+/**end of about styles~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+
+/**video styles~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+iframe{
+	width:100%;
+	aspect-ratio: 16 / 9;
+}
+/**end of video styles~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+
+/** testimonial styles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+.testimonialContainer{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap:20px;
+    margin-bottom: 20px;
+}
+.testimonialFlexItem{
+    border: 1px solid var(--accentColor);
+    padding: 10px;
+    max-width: 300px;
+}
+.testimonialFlexItem p{
+    padding: 0 10px 0 10px;
+    max-width: 75ch;
+}
+.testimonialName{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+}
+.testimonialName img{
+    height: 50px;
+    width: 50px;
+}
+.starRating{
+    padding: 10px;
+    color:var(--ratingColor);
+}
+/** end of testimonial styles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+
+/** contact styles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+.contact{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.contactHeader{
+    margin-right:auto;
+}
+.contactHeader h4, .contactHeader h2, .contactHeader p{
+    text-align: left;
+}
+.contactForm, .contactInfo{
+    width:50%;
+}
+.contactForm #name, .contactForm #email{
+    width: 90%;
+}
+.contactForm #message{
+    width: 90%;
+    height: 200px;
+    resize: none;
+}
+.contact #submit{
+    background: var(--accentColor);
+    color:var(--backColor);
+    padding:10px 20px 10px 20px;
+    border:solid 1px var(--accentColor);
+    outline: none;
+    transition: 1s;
+}
+.contact #submit:hover{
+    background: var(--backColor);
+    color:var(--textColor);
+
+}
+.contactInfo{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.contactIcon{
+    width: 50%;
+    height: 50%;
+    text-align: left;
+}
+.contactIcon h3{
+    text-align: left;
+}
+.contactIcon i{
+    font-size: 32px;
+    color: var(--accentColor);
+}
+.contactIcon a{
+    text-decoration: none;
+    color: var(--textColor);
+}
+.contactIcon a:hover{
+    text-decoration: underline;
+}
+/** end of contact styles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+
+/** footer styles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+	margin-top:30px;
+	margin-bottom:10px;
+}
+footer div{
+    display: flex;
+    align-items: center;
+    gap:20px;
+    height: 75px;
+    width: 100%;
+    max-width: var(--maxwidth);
+}
+.footerLinks{
+    border-bottom: solid var(--accentColor) 2px;
+}
+.copyright{
+    justify-content: center;
+}
+footer div a{
+    margin:10px 5px;
+    padding: 10px 5px;
+    text-decoration: none;
+    color: var(--textColor);
+}
+footer div p{
+    text-align: center;
+    padding: 10px 5px;
+    color: var(--textColor);
+}
+footer div a:nth-child(7){
+    margin:0 10px 0 auto;
+}
+footer div a:hover{
+	text-decoration:underline;
+}
+footer div a i span{
+	display: none;
+}
+/** end of footer styles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+
+/** sign-up/login styles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+.signupForm, .loginForm{
+    min-height: 70vh;
+    width: 600px;
+}
+.signupForm h1, .signupForm p, .loginForm h1, .loginForm p{
+    text-align: center;
+}
+.signupForm #name, .signupForm #email, .signupForm #password, .loginForm #email, .loginForm #password{
+    width:100%;
+    border: solid 1px var(--textColor);
+    height: 50px;
+    font-size: 24px;
+}
+.signupForm #submit, .loginForm #submit{
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    outline:none;
+    border: solid 1px var(--accentColor);
+    color:var(--backColor);
+    background:var(--accentColor);
+    font-size: 16px;
+    transition: 1s;
+}
+.signupForm #submit:hover, .loginForm #submit:hover{
+    color:var(--textColor);
+    background:var(--backColor);
+}
+.loginLinks{
+    width: 600px;
+    display: flex;
+    flex-direction: row;
+}
+.loginLinks a{
+    padding: 10px;
+    width:50%;
+    color: var(--textColor);
+    text-decoration: none;
+    text-align: center;
+}
+.loginLinks a.active{
+    border-bottom:solid 2px var(--accentColor);
+}
+/** end of sign-up/login styles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+/** course page styles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+.courseTitle{
+    display:flex;
+    justify-content: left;
+    width: 100%;
+}
+#tagline{
+    text-align: left;
+    margin-right: auto;
+    margin-left: 30px;
+}
+#coursePrice{
+    margin-left: auto;
+    margin-right: 30px;
+}
+#courseTitle{
+    margin-left: 30px;
+}
+.courseDetails div, .courseDetails p{
+    margin:0 auto 0 auto;
+
+}
+.courseDetails{
+    width: 100%;
+    display:flex;
+    justify-content: center;
+    gap:auto;
+    margin-bottom: 10px;
+}
+.courseDetails #courseAuthor{
+    font-weight: bold;
+}
+.courseContent{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.courseVideo{
+    width: 75%;
+}
+.courseLessons{
+    width:25%;
+    display:flex;
+    flex-direction: column;
+    align-content: center;
+}
+.lesson{
+    margin-left: 10px;
+    margin-bottom: auto;
+    border-top: solid 2px var(--accentColor);
+}
+#lessonTitle{
+    font-weight: bold;
+}
+.lesson a{
+    opacity: 50%;
+}
+/** course page styles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+
+/** media queries ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+@media (max-width:1400px){
+    .gridContainer {
+        grid-template-columns: repeat(3,1fr);
+    }
+}
+@media (max-width:1100px){
+    .gridContainer {
+        grid-template-columns: repeat(2,1fr);
+    }
+	.testimonialFlexItem{
+		margin: 10px;
+	}
+}
+@media (max-width:800px){
+    .gridContainer {
+        grid-template-columns: repeat(1,1fr);
+    }
+	.nav a:not(:first-child){display:none;}
+    .nav a:nth-child(2){
+        display:block;
+        position: absolute;
+        left:0;
+        top:0;
+    }
+    .nav.a object{
+        width:auto;
+        height: 75px;
+    }
+	.nav a.icon{
+		display: flex;
+		align-self: left;
+		color:var(--accentColor)
+	}
+	.nav.responsive{
+		position: sticky;
+		top:0;	
+		height:100%;
+	}
+	.nav.responsive a{
+		transition: 1s;
+		display: flex;
+		min-width: 90%;
+		justify-content: center;
+		margin-top: 5px;
+	}
+	.nav.responsive{
+		flex-direction: column;
+		align-items: center;
+	}
+	.nav.responsive .icon{
+	color:var(--accentColor);
+	align-self: right;
+	border: 2px solid;
+	border-radius: 15px;
+	}
+	.nav.responsive #homeLink{
+		display:none;
+	}
+	.spacer,.layer1,.layer2{
+		display: none;
+	}
+	.nav{
+		border-bottom: var(--backColor) 2px solid;
+	}
+	.banner h1, .banner p{
+		color: var(--backColor);
+		text-align: center ;
+		max-width: 90%;
+	}
+	form.searchbar{
+		width:100%;
+		display:flex;
+		justify-content:center;
+	}
+	#search{
+		width:70%;
+	}
+	.courseNav div a{
+		width:135px;
+		padding:5px;
+		margin:5px;
+		text-align:center;
+		border:solid 1px var(--accentColor);
+	}
+	.courseNav div{
+		flex-wrap:wrap;
+		height:100%;
+	}
+	.about{
+		width:90%;
+	}
+}
+@media (max-width:1550px){
+	.contactHeader{
+		width:90%;
+		margin-left:5%;
+	}
+	.contact{
+		display: flex;
+		flex-direction: column;
+		justify-content:center;
+		width: 90%;
+	}
+	.contact form{
+		width:100%;
+		justify-items:center;
+	}
+	.contactForm, .contactInfo{
+		width:100%;
+		margin-bottom:10px;
+	}
+	.contactInfo{
+		display:flex;
+		justify-content:space-between;
+		padding:10px;
+		border-top:solid 2px var(--accentColor);
+	}
+	.contactForm #name, .contactForm #email{
+		width: 100%;
+	}
+	.contactForm #message{
+		width: 100%;
+	}
+    .contactIcon{
+		margin:10px;
+		width:auto;
+	}
+}
+@media (max-width:1500px){
+	footer .div{
+		max-width:100vw;
+	}
+}
+@media (max-width:850px){
+	footer{
+        flex-direction: row;
+        align-items: start;
+        border-top: solid 2px var(--accentColor);
+	}
+    footer div{
+		width:50%;
+        flex-direction: column;
+        gap:0px;
+        height: 100%;
+        border-bottom: none;
+        margin-top: 5px;
+	}
+    footer div a#homeLink{
+        display: none;
+    }
+    .footerLinks{
+        border:none;
+    }
+    footer div a{
+        margin:0;
+    }
+    footer div a:nth-child(7){
+        margin:0;
+    }
+    footer div a i span{
+        margin-left: 5px;
+        display: inline-block;
+    }
+    footer div a i span:hover{
+        text-decoration: underline;
+    }
+    .loginLinks{
+        width: 90%;
+    }
+    .signupForm, .loginForm{
+        min-height: 70vh;
+        width: 90%;
+    }
+}
+
+/** end of media queries ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/

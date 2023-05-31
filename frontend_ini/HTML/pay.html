@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/A3style.css"><!--CSS link-->
+    <script src="../JS/A3js.js"></script><!--JS link-->
+    <script src="https://kit.fontawesome.com/b945a35427.js" crossorigin="anonymous"></script>
+    <title>ITeachYouOnline</title>
+</head>
+<body>
+    <nav>
+        <div class="nav" id="Top">
+			<a href="javascript:void(0);" style="font-size:24px;" class="icon" onclick="hamburgerMenu()">&#9776;</a><!--Hamburger menu-->
+            <a id="homeLink" href="../HTML/index.html"><object type="image/svg+xml" data="../Images/logo.svg" width="auto" height="75px" style="pointer-events: none;"></object></a>
+            <a href="../HTML/index.html">Homepage</a>
+            <a href="../HTML/index.html#courseNav">Courses</a>
+            <a href="../HTML/index.html#contact">Contact Us</a>
+            <a id="signUp" href="../HTML/signup.html">Sign Up</a>
+            <a id="login" href="../HTML/login.html">Login</a>
+        </div>
+    </nav>
+	<section class="content">
+		<div class="contentContainer">
+            <div class="payment">
+                <div class="paymentSection">
+                    <h4 class="bigHeading">Payment</h4>
+                    <h2>Billing Address</h2>
+                    <form action="">
+                        <input type="text" id="email" name="email" placeholder=" Email...">
+                        <div>
+                            <input type="text" id="fname" name="fname" placeholder=" First Name...">
+                            <input type="text" id="lname" name="lname" placeholder=" Last Name...">
+                        </div>
+                        <input type="text" id="address1" name="address1" placeholder=" Address Line 1...">
+                        <input type="text" id="address2" name="address2" placeholder=" Address Line 2...">
+                        <div>
+                            <input type="text" id="country" name="country" placeholder=" Country...">
+                            <input type="text" id="postcode" name="postcode" placeholder=" Postcode...">
+                        </div>
+                        <input type="text" id="phone" name="phone" placeholder=" Phone Number...">
+                      </form> 
+                      <div class="paymentMethod">
+                        <h3>Payment Method</h3>
+                        <div>
+                            <a href="" class="active"><span><i class="fa-brands fa-cc-visa"></i><i class="fa-brands fa-cc-mastercard"></i></span>Credit/Debit Card</a>
+                            <a href=""><span><i class="fa-brands fa-paypal"></i></span>PayPal</a>
+                        </div>
+                      </div>
+                </div>
+                <div class="paymentSection">
+                    <h4 class="smallHeading">Payment</h4><br>
+                    <h2>Order Summary</h2>
+                    <img src="../Images/databaseplaceholder.jpg" alt="course image">
+                    <div class="paymentDescription">
+                        <h2>Database Development</h2>
+                        <h2 id="price">£49.99</h2>
+                    </div>
+                    <div class="paymentTotal">
+                        <h2>Total:</h2>
+                        <h2 id="totalPrice">£49.99</h2>
+                    </div>
+                    <a id="buyButton">Buy Course</a><br><br><br>
+                </div>
+            </div>
+        </div>   
+    </section>
+	<footer>
+		<div class="footerLinks">
+            <a id="homeLink" href="../HTML/index.html"><object type="image/svg+xml" data="../Images/logo.svg" width="auto" height="50px" style="pointer-events: none;"></object></a>
+            <a href="../HTML/index.html">Homepage</a>
+            <a href="../HTML/index.html#courseNav">Courses</a>
+            <a href="../HTML/index.html#contact">Contact Us</a>
+            <a href="../HTML/signup.html">Sign Up</a>
+            <a href="../HTML/login.html">Login</a>
+			<a href="https://www.youtube.com/channel/UCGwamXNRqmpx5Aw8qEezjaw">
+					<i class="fa-brands fa-youtube"><span> Youtube</span></i>
+			</a> 
+			<a href="https://www.instagram.com/iteachyou00/">
+				<i class="fa-brands fa-instagram"><span> Instagram</span></i>
+			</a>
+			<a href="https://www.facebook.com/people/I-teach-You-courses/pfbid02GyFnLp3XSLod7fnDcc9a55JMP3p2j3TH4QuQMcFGDHxic3UCXymw3JPBTyQ8KpKQl/">
+				<i class="fa-brands fa-facebook"><span> Facebook</span></i> 
+			</a>          
+        </div>
+        <div class="copyright">
+            <p>2023 iTeachYou Online. All right reserved.</p>
+            <a>Privacy Policy</a>
+            <a>Terms of Service</a>
+            <a>Cookies Settings</a>
+        </div>
+	</footer>
+</body>
+</html>
